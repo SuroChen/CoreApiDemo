@@ -21,13 +21,12 @@
 
     function onSelectAll(e) {
         $.ajax({
-            //url: "data/UserInfo.json",
-            url: "http://localhost:8802/api/UserInfo/getUserInfoes/",
+            url: "api/User/getUsers/",
             type: "GET"
         }).done(function (data) {
             var tem = "";
             $.each(data, function (i, item) {
-                tem += "编号：" + item.id + "，姓名：" + item.name + "，密码：" + item.password + "，年龄：" + item.age + "<br/>";
+                tem += "编号：" + item.id + "，用户：" + item.username + "，密码：" + item.password + "，姓名：" + item.fullname + "<br/>";
             });
             $("#divShow").empty().append(tem);
         }).fail(function (xhr, textStatus, err) {
@@ -37,10 +36,10 @@
 
     function onSelectById(e) {
         $.ajax({
-            url: "http://localhost:8802/api/UserInfo/getUserInfoByID/" + $("#id").val(),
+            url: "api/UserInfo/getUser/" + $("#id").val(),
             type: "GET"
         }).done(function (data) {
-            var tem = "编号：" + data.id + "，姓名：" + data.name + "，密码：" + data.password + "，年龄：" + data.age;
+            var tem = "编号：" + data.id + "，用户：" + data.username + "，密码：" + data.password + "，姓名：" + data.fullname;
             $("#divShow").empty().append(tem);
         }).fail(function (xhr, textStatus, err) {
             alert("获取数据失败，请联系系统管理员。");
@@ -49,12 +48,12 @@
 
     function onInsert(e) {
         var obj = new Object();
-        obj.name = $("#name").val();
+        obj.username = $("#username").val();
         obj.password = $("#password").val();
-        obj.age = $("#age").val();
+        obj.fullname = $("#fullname").val();
 
         $.ajax({
-            url: "http://localhost:8802/api/UserInfo/addUserInfo/",
+            url: "api/UserInfo/addUser/",
             data: obj,
             type: "POST"
         }).done(function (data) {
@@ -67,7 +66,7 @@
 
     function onDelete(e) {
         $.ajax({
-            url: "http://localhost:8802/api/UserInfo/destroyUserInfo/" + $("#id").val(),
+            url: "api/UserInfo/destroyUser/" + $("#id").val(),
             type: 'DELETE'
         }).done(function (data) {
             onSelectAll();
@@ -80,12 +79,12 @@
     function onUpdate(e) {
         var obj = new Object();
         obj.id = $("#id").val();
-        obj.name = $("#name").val();
+        obj.username = $("#username").val();
         obj.password = $("#password").val();
-        obj.age = $("#age").val();
+        obj.fullname = $("#fullname").val();
 
         $.ajax({
-            url: "http://localhost:8802/api/UserInfo/modifyUserInfo/",
+            url: "api/UserInfo/modifyUser/" + obj.id,
             data: obj,
             type: 'PUT'
         }).done(function (data) {
