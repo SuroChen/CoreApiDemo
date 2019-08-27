@@ -1,5 +1,6 @@
 ﻿using CoreApiDemo.Models;
 using CoreApiDemo.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,6 +17,14 @@ namespace CoreApiDemo.Controllers
         public UserController(YpobDBContent dbContext)
         {
             repo = new UserRepository(dbContext);
+        }
+
+        // GET: api/User/getUsers
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult<string> getToken()
+        {
+            return repo.getToken();
         }
 
         // GET: api/User/getUsers

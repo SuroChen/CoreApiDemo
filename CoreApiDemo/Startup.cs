@@ -1,4 +1,5 @@
-﻿using CoreApiDemo.Models;
+﻿using CoreApiDemo.Filters;
+using CoreApiDemo.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace CoreApiDemo
             var sqlConnection = Configuration.GetConnectionString("SqlServerConnection");
             services
                 .AddDbContext<YpobDBContent>(option => option.UseSqlServer(sqlConnection))
-                .AddMvc()
+                .AddMvc(option => { option.Filters.Add(new AuthFilter()); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

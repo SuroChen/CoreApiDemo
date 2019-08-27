@@ -1,4 +1,5 @@
 ﻿using CoreApiDemo.Models;
+using CoreApiDemo.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +18,11 @@ namespace CoreApiDemo.Repositories
         #endregion
 
         #region "Public Methods"
+        public string getToken()
+        {
+            return JwtUtil.createTokenByBuilder(1);
+        }
+
         public async Task<List<User>> getUsers()
         {
             return await _dbContext.User.ToListAsync();
